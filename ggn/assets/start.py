@@ -24,6 +24,7 @@ from .. import sigma as app
 from ggn.assets.functions import screenshot
 import subprocess
 from config import MONGODB_CONNECTION_STRING, OWNER_ID, LOG_GROUP
+from utils import verify_user, check_token
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -49,29 +50,7 @@ REGISTERED_USERS = load_registered_users()
 
 @gagan.on(events.NewMessage(pattern=f"^/start"))
 async def start(event):
-    client = bot
-    massage = update
-     data = message.command[1]
-    if data.split("-", 1)[0] == "verify": # set if or elif it depend on your code
-        userid = data.split("-", 2)[1]
-        token = data.split("-", 3)[2]
-        if str(message.from_user.id) != str(userid):
-            return await message.reply_text(
-                text="<b>Invalid link or Expired link !</b>",
-                protect_content=True
-            )
-        is_valid = await check_token(client, userid, token)
-        if is_valid == True:
-            await message.reply_text(
-                text=f"<b>Hey {message.from_user.mention}, You are successfully verified !\nNow you have unlimited access for all files till today midnight.</b>",
-                protect_content=True
-            )
-            await verify_user(client, userid, token)
-        else:
-            return await message.reply_text(
-                text="<b>Invalid link or Expired link !</b>",
-                protect_content=True
-    )
+    
     """
     Command to start the bot
     """
@@ -129,7 +108,29 @@ async def get_registered_users_command(event):
     # Send the text file
     await event.respond(file=filename, force_document=True)
     os.remove(filename)  # Remove the temporary file after sending
-
+client = bot
+    massage = update
+     data = message.command[1]
+    if data.split("-", 1)[0] == "verify": # set if or elif it depend on your code
+        userid = data.split("-", 2)[1]
+        token = data.split("-", 3)[2]
+        if str(message.from_user.id) != str(userid):
+            return await message.reply_text(
+                text="<b>Invalid link or Expired link !</b>",
+                protect_content=True
+            )
+        is_valid = await check_token(client, userid, token)
+        if is_valid == True:
+            await message.reply_text(
+                text=f"<b>Hey {message.from_user.mention}, You are successfully verified !\nNow you have unlimited access for all files till today midnight.</b>",
+                protect_content=True
+            )
+            await verify_user(client, userid, token)
+        else:
+            return await message.reply_text(
+                text="<b>Invalid link or Expired link !</b>",
+                protect_content=True
+        )
 S = "/start"
 START_PIC = "https://graph.org/file/1dfb96bd8f00a7c05f164.gif"
 TEXT = "Hey! I am Advance Content Saver Bot, do login in bot by /login and start saving from public/private channels/groups via sending post link.\n\n👉🏻 Execute /batch for bulk process upto 1K files range."
