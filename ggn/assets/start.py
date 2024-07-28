@@ -23,8 +23,8 @@ from telethon.sync import TelegramClient
 from .. import sigma as app
 from ggn.assets.functions import screenshot
 import subprocess
-from config import MONGODB_CONNECTION_STRING, OWNER_ID, LOG_GROUP
-from utils import verify_user, check_token,check_verification, get_token
+from config import MONGODB_CONNECTION_STRING, OWNER_ID, LOG_GROUP, VERIFY, VERIFY_TUTORIAL, BOT_USERNAME
+from utils import verify_user, check_token, check_verification, get_token
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
