@@ -24,7 +24,7 @@ from .. import sigma as app
 from ggn.assets.functions import screenshot
 import subprocess
 from config import MONGODB_CONNECTION_STRING, OWNER_ID, LOG_GROUP
-from utils import verify_user, check_token
+from utils import verify_user, check_token,check_verification, get_token
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -278,12 +278,6 @@ async def youtube_dl_command(_, message):
             k = thumbnail(ggn)
             result = await app.send_video(
                 chat_id=message.chat.id,
-              from utils import check_verification, get_token
-from info import VERIFY, VERIFY_TUTORIAL, BOT_USERNAME
-
-#@Client.on_message..........
-#async def...........
-
     if not await check_verification(client, message.from_user.id) and VERIFY == True:
          btn = [[
             InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
